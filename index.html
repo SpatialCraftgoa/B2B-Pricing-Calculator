@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Pricing Calculator (Topo + Aerial)</title>
+    <style>
+        /* Base Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .calculator-wrapper {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            background-color: #007bff;
+            color: white;
+            margin-top: 10px;
+            width: 48%;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button[type="button"] {
+            background-color: #6c757d;
+        }
+
+        button[type="button"]:hover {
+            background-color: #5a6268;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+        }
+
+        #result h2 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        #result p {
+            font-size: 14px;
+            margin: 5px 0;
+            color: #555;
+        }
+
+        #result p strong {
+            color: #000;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Mobile-friendly */
+        @media (max-width: 500px) {
+            .calculator-wrapper {
+                padding: 15px;
+            }
+
+            button {
+                width: 48%;
+                font-size: 13px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator-wrapper">
+    <h1>Survey Pricing Calculator</h1>
+
+    <form onsubmit="calculateCosts(event)">
+        <label for="area">Enter the area (sqm):</label>
+        <input type="number" id="area" name="area" step="0.01" required>
+
+        <div class="button-group">
+            <button type="submit">Calculate</button>
+            <button type="button" onclick="resetForm()">Reset</button>
+        </div>
+    </form>
+
+    <div id="result" style="display: none;">
+        <h2>Calculation Results</h2>
+        <p>Topo Survey Cost: ₹<span id="topoCost">0.00</span></p>
+        <p>Aerial Survey Cost: ₹<span id="aerialCost">0.00</span></p>
+        <p><strong>Total Cost: ₹<span id="totalCost">0.00</span></strong></p>
+    </div>
+</div>
+
+<script>
+// Topo Survey Pricing Logic
+function calculateTopoCost(area) {
+    if (area <= 8333.3333) {
+        return 25000;
+    } else if (area <= 30000) {
+        return area * 3;
+    } else if (area <= 70000) {
+        return 90000 + (area - 30000) * 2.5;
+    } else {
+        return 190000 + (area - 70000) * 2;
+    }
+}
+
+// Aerial Survey Pricing Logic
+function calculateAerialCost(area) {
+    if (area <= 50000) {
+        return 24995;
+    } else if (area <= 100000) {
+        return 24995 + (area - 50000) * 0.40;
+    } else if (area <= 150000) {
+        return 44995 + (area - 100000) * 0.35;
+    } else if (area <= 200000) {
+        return 62495 + (area - 150000) * 0.30;
+    } else {
+        return 74995 + (area - 200000) * 0.20;
+    }
+}
+
+// Calculation Handler
+function calculateCosts(event) {
+    event.preventDefault();
+    const area = parseFloat(document.getElementById('area').value);
+
+    if (isNaN(area) || area <= 0) {
+        alert('Please enter a valid area greater than zero.');
+        return;
+    }
+
+    const topoCost = calculateTopoCost(area);
+    const aerialCost = calculateAerialCost(area);
+    const totalCost = topoCost + aerialCost;
+
+    document.getElementById('topoCost').textContent = topoCost.toFixed(2);
+    document.getElementById('aerialCost').textContent = aerialCost.toFixed(2);
+    document.getElementById('totalCost').textContent = totalCost.toFixed(2);
+
+    document.getElementById('result').style.display = 'block';
+}
+
+// Reset Handler
+function resetForm() {
+    document.getElementById('area').value = '';
+    document.getElementById('topoCost').textContent = '0.00';
+    document.getElementById('aerialCost').textContent = '0.00';
+    document.getElementById('totalCost').textContent = '0.00';
+    document.getElementById('result').style.display = 'none';
+}
+</script>
+
+</body>
+</html>
