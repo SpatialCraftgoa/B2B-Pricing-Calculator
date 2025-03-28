@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleVRInputs(); // Ensure the correct state on page load
 });
 
-/* Topo Survey Pricing Logic
+//Topo Survey Pricing Logic
 function calculateTopoCost(area) {
     if (area <= 8333.3333) {
         return 25000;
@@ -30,7 +30,7 @@ function calculateTopoCost(area) {
         return 190000 + (area - 70000) * 2;
     }
 }
-    */
+    
 
 // Aerial Survey Pricing Logic
 function calculateAerialCost(area) {
@@ -51,13 +51,13 @@ function updateTotal() {
     const area = parseFloat(document.getElementById('area').value) || 0;
 
     // Calculate Topographic and Aerial Survey Costs
-    //const topoCost = calculateTopoCost(area);
+    const topoCost = calculateTopoCost(area);
     const aerialCost = calculateAerialCost(area);
 
     let total =  aerialCost;
 
     // Update the displayed cost
-   // document.getElementById('topoCost').innerText = `₹${topoCost.toLocaleString()}`;
+   document.getElementById('topoCost').innerText = `₹${topoCost.toLocaleString()}`;
     document.getElementById('aerialCost').innerText = `₹${aerialCost.toLocaleString()}`;
 
     // Add Smart Interactive Digital Map cost
@@ -87,7 +87,7 @@ function updateTotal() {
 
 function resetForm() {
     document.getElementById('area').value = '';
-    //document.getElementById('topoCost').innerText = '₹0.00';
+    document.getElementById('topoCost').innerText = '₹0.00';
     document.getElementById('aerialCost').innerText = '₹0.00';
     document.getElementById('totalCost').innerText = '₹0.00';
 
