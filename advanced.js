@@ -54,15 +54,15 @@ function updateTotal() {
     const topoCost = calculateTopoCost(area);
     const aerialCost = calculateAerialCost(area);
 
-    let total =  aerialCost;
+    let total = topoCost + aerialCost;
 
     // Update the displayed cost
-   document.getElementById('topoCost').innerText = `₹${topoCost.toLocaleString()}`;
+    document.getElementById('topoCost').innerText = `₹${topoCost.toLocaleString()}`;
     document.getElementById('aerialCost').innerText = `₹${aerialCost.toLocaleString()}`;
 
     // Add Smart Interactive Digital Map cost
     const smartMapCost = parseFloat(document.getElementById('smartMap').value) || 0;
-    if (smartMapCost) total += smartMapCost;
+    total += smartMapCost;
 
     // Check if aerial video add-on is selected
     if (document.getElementById('aerialVideo').checked) {
@@ -84,6 +84,7 @@ function updateTotal() {
 
     document.getElementById('totalCost').innerText = `₹${total.toLocaleString()}`;
 }
+
 
 function resetForm() {
     document.getElementById('area').value = '';
