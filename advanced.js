@@ -48,14 +48,16 @@ function calculateAerialCost(area) {
 }
 
 function updateTotal() {
-    const area = parseFloat(document.getElementById('area').value) || 0;
+     const area = parseFloat(document.getElementById('area').value);
 
-    // Calculate Topographic and Aerial Survey Costs
+    if (isNaN(area) || area <= 0) {
+        alert("Please enter a valid area greater than zero.");
+        return;
+    }
+
     const topoCost = calculateTopoCost(area);
     const aerialCost = calculateAerialCost(area);
-
     let total = topoCost + aerialCost;
-
     // Update the displayed cost
     document.getElementById('topoCost').innerText = `₹${topoCost.toLocaleString()}`;
     document.getElementById('aerialCost').innerText = `₹${aerialCost.toLocaleString()}`;
