@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Survey Cost Calculator</title>
+  <link rel="stylesheet" href="advanced.css">
+  <link rel="stylesheet" href="modal.css">
+  <style>
+    
+  </style>
+</head>
+<body>
+
+<div class="calculator-container">
+  <h2>Survey Cost Calculator</h2>
+
+  <!-- 🔹 Area Input -->
+  <div class="input-group">
+    <label for="area">Enter the area (sqm):</label>
+    <input type="number" id="area" placeholder="Enter area in sqm">
+  </div>
+
+  <div class="button-group">
+    <button onclick="resetForm()" class="secondary">Reset</button>
+  </div>
+
+  <div class="results">
+    <h3>Calculation Results</h3>
+    <p>Topo Survey Cost: <span id="topoCost">₹0.00</span></p>
+    <p>Aerial Survey Cost: <span id="aerialCost">₹0.00</span></p>
+  </div>
+
+  <hr>
+
+  <h3>Optional Add-ons</h3>
+
+  <div class="input-group">
+    <label for="smartMap">Smart Interactive Digital Map:</label>
+    <select id="smartMap">
+      <option value="0">None</option>
+      <option value="5000">Monthly (₹5,000)</option>
+      <option value="25000">6 Months (₹25,000)</option>
+      <option value="50000">Yearly (₹50,000)</option>
+    </select>
+  </div>
+
+  <div class="addon-group">
+    <input type="checkbox" id="aerialVideo">
+    <label for="aerialVideo">Aerial footage / Site Overview Video (₹15,000)</label>
+  </div>
+
+  <div class="addon-group">
+    <input type="checkbox" id="vrWalkthrough">
+    <label for="vrWalkthrough">360° VR Walkthrough (5 Aerial Points) (₹15,000)</label>
+  </div>
+
+  <div class="input-group">
+    <label for="groundPoints">Additional Ground 360° Points (₹500/point):</label>
+    <input type="number" id="groundPoints" value="0" disabled>
+  </div>
+
+  <div class="input-group">
+    <label for="aerialPoints">Additional Aerial 360° Points (₹3,000/point):</label>
+    <input type="number" id="aerialPoints" value="0" disabled>
+  </div>
+
+  <div class="total-cost">
+    Total Cost (including add-ons): <strong id="totalCost">₹0.00</strong>
+  </div>
+
+  <div style="text-align: center; margin-top: 20px;">
+    <button onclick="showPopup()">Download Quotation (PDF)</button>
+  </div>
+</div>
+
+<!-- 🔹 Personal Info Popup -->
+<div class="modal-overlay" id="popup">
+  <div class="modal">
+   
+    <input type="text" id="name" placeholder="Enter your full name" required>
+<input type="email" id="email" placeholder="Enter your email address" required>
+<input type="text" id="village" placeholder="Enter village name(optional)" >
+<input type="text" id="state" placeholder="Enter state name (e.g., Goa)(optional)" >
+<input type="number" id="surveyNo" placeholder="Enter survey number (e.g., 116)(optional)" >
+<input type="text" id="subDivisionNo" placeholder="Enter sub-division number (e.g., 13)(optional)" >
+
+
+    <button onclick="handleDownload()">Generate Quotation</button>
+    <button onclick="closePopup()" class="secondary">Cancel</button>
+  </div>
+</div>
+
+<!-- 🔹 Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+<script src="advanced.js"></script>
+<script src="print.js"></script>
+
+<script>
+  function showPopup() {
+    document.getElementById('popup').style.display = 'flex';
+  }
+
+  function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+  }
+
+  function handleDownload() {
+    // Basic validation
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const village = document.getElementById("village").value.trim();
+    const state = document.getElementById("state").value.trim();
+    const surveyNo = document.getElementById("surveyNo").value.trim();
+    const subDivisionNo = document.getElementById("subDivisionNo").value.trim();
+
+    if (!name || !email ) {
+      alert("Please fill in all personal details.");
+      return;
+    }
+    function closeModal() {
+  document.getElementById('infoModal').style.display = 'none';
+}
+
+    // Save data temporarily in localStorage or global variable
+    window.formDetails = { name, email, village, state, surveyNo, subDivisionNo };
+
+    // Hide popup and call PDF generator
+    closePopup();
+    downloadPDF();
+  }
+</script>
+
+</body>
+</html>
