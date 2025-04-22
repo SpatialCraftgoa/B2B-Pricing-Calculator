@@ -70,15 +70,25 @@ async function downloadPDF() {
 
   doc.setFontSize(11);
   doc.setFont(undefined, "bold");
+  
   let subText = "SUB: Survey of Property";
-  if (surveyNo || subDivisionNo) {
+  
+  // Check if only one of the surveys is selected
+  if (document.getElementById('topoCheckbox').checked && !document.getElementById('aerialCheckbox').checked) {
+    subText = "SUB: Topographical Survey of Property";
+  } else if (!document.getElementById('topoCheckbox').checked && document.getElementById('aerialCheckbox').checked) {
+    subText = "SUB: Aerial Survey of Property";
+  } else if (surveyNo || subDivisionNo) {
+    // Check if both surveys are selected
     subText += " bearing";
     if (surveyNo) subText += ` Survey No ${surveyNo}`;
     if (subDivisionNo) subText += ` / ${subDivisionNo}`;
     if (village) subText += `, ${village}`;
     if (state) subText += `, ${state}`;
   }
+  
   doc.text(subText, 14, 95);
+  
   doc.setFont(undefined, "normal");
 
   const items = [];
