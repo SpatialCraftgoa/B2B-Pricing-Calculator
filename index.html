@@ -15,10 +15,15 @@
 <div class="calculator-container">
   <h2>Survey Cost Calculator</h2>
 
+  <div class="addon-group">
+    <label><input type="checkbox" id="topoCheckbox"> Topographical Survey</label>
+    <label><input type="checkbox" id="aerialCheckbox"> Aerial Survey</label>
+  </div>
+
   <!-- 🔹 Area Input -->
   <div class="input-group">
     <label for="area">Enter the area (sqm):</label>
-    <input type="number" id="area" placeholder="Enter area in sqm">
+    <input type="number" id="area" placeholder="Enter area in sqm" min="1">
   </div>
 
   <div class="button-group">
@@ -27,9 +32,11 @@
 
   <div class="results">
     <h3>Calculation Results</h3>
-    <p>Topo Survey Cost: <span id="topoCost">₹0.00</span></p>
-    <p>Aerial Survey Cost: <span id="aerialCost">₹0.00</span></p>
+    <p id="topoCostRow" style="display: none;">Topo Survey Cost: <span id="topoCost">₹0.00</span></p>
+    <p id="aerialCostRow" style="display: none;">Aerial Survey Cost: <span id="aerialCost">₹0.00</span></p>
+    
   </div>
+  
 
   <hr>
 
@@ -57,12 +64,12 @@
 
   <div class="input-group">
     <label for="groundPoints">Additional Ground 360° Points (₹500/point):</label>
-    <input type="number" id="groundPoints" value="0" disabled>
+    <input type="number" id="groundPoints" value="0" disabled min="1">
   </div>
 
   <div class="input-group">
     <label for="aerialPoints">Additional Aerial 360° Points (₹3,000/point):</label>
-    <input type="number" id="aerialPoints" value="0" disabled>
+    <input type="number" id="aerialPoints" value="0" disabled min="1">
   </div>
 
   <div class="total-cost">
@@ -82,7 +89,7 @@
 <input type="email" id="email" placeholder="Enter your email address" required>
 <input type="text" id="village" placeholder="Enter village name(optional)" >
 <input type="text" id="state" placeholder="Enter state name (e.g., Goa)(optional)" >
-<input type="number" id="surveyNo" placeholder="Enter survey number (e.g., 116)(optional)" >
+<input type="number" id="surveyNo" placeholder="Enter survey number (e.g., 116)(optional)" min="0">
 <input type="text" id="subDivisionNo" placeholder="Enter sub-division number (e.g., 13)(optional)" >
 
 
